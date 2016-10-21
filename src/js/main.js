@@ -83,5 +83,45 @@ var moreData = new Vue({
         this.list.books = getArray();
     }
 });
+
+function getTitle() {
+    return "get from title";
+};
+
+Vue.component('my-compnent', {
+    template: '\
+    <div>\
+<h1>Vue template with ajax update</h1>\
+<h3>{{title}}</h3>\
+<h3>{{titleFromMethod}}</h3>\
+<h3>{{titleFromAjax}}</h3>\
+</div>\
+',
+    data: function() {
+        return {
+            title: "init title",
+            titleFromMethod: "title from method",
+            titleFromAjax: "title from ajax (will be update after 10 sec)"
+        }
+    },
+    created: function () {
+        this.title = "in ready";
+        this.titleFromMethod = getTitle();
+        var self = this;
+
+        $.ajax("http://pokeapi.co/api/v2/").done(function (data) {
+            console.info(data);
+            setTimeout(function () {
+                self.titleFromAjax = data.ability + "--- from ajax call";
+            }, 10000);
+
+        });
+    }
+});
+
+new Vue({
+    el: '#example_test'
+});
+
 exports.moreData = moreData;
 })(window);
