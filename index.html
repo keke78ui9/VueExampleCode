@@ -25,6 +25,17 @@
     <my-compnent></my-compnent>
 </div>
 
+<div id="component-input">
+    <h1>Component-input</h1>
+    <component-input message="hi my message from html!" my-other-msg="->>> this is my other message!"></component-input>
+    <component-item first-name="john" last-name="mike" age="10" height="5'7" weight="160" birth="1970/07/01"></component-item>
+    <component-object :dobject="{name:'json_name', age:'30', email:'my@gmail.com'}"></component-object>
+</div>
+
+<div id="app">
+    <component-object2 name="da" :age="18" :schools="{name: 'my school', location: 'california', books: [{title: 'hi'}, {title: 'yo'}]}" :readBooks="[{book:'my lady'}, {book:'your dream!'}]"></component-object2>
+</div>
+
         <script src="/src/vender/vue.js"></script>
          <script src="/src/js/main.js"></script>
     </body>

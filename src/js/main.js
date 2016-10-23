@@ -3,7 +3,7 @@ console.log(exports);
 
 var test = new Vue({
 		el: '.test',
-        template: '<h1>1. Vue Template</h1>'
+        template: '<h1>Vue Template</h1>'
 });
 
 var test2 = new Vue({
@@ -122,6 +122,71 @@ Vue.component('my-compnent', {
 new Vue({
     el: '#example_test'
 });
+
+Vue.component('component-input',{
+    props: ['message', "myOtherMsg"],
+    template: '<div>{{message}} - {{myOtherMsg}}</div>'
+})
+
+Vue.component('component-item',{
+    props: ['firstName', "lastName", "age", "height", "weight", "birth"],
+    template: '\
+    <div>\
+    <div>firstName: {{firstName}}</div>\
+    <div>lastName: {{lastName}}</div>\
+    <div>age: {{age}}</div>\
+    <div>height: {{height}}</div>\
+    <div>weight: {{weight}}</div>\
+    <div>birth: {{birth}}</div>\
+    </div>\
+    '
+})
+
+
+Vue.component('component-object',{
+    props: ['dobject'],
+    template: '<div>\
+    <h1>Component with Json input to Props</h1>\
+    <div>{{dobject.name}}</div>\
+    <div>{{dobject.age}}</div>\
+    <div>{{dobject.email}}</div>\
+    </div>\
+    '
+})
+new Vue({
+    el: '#component-input'
+});
+
+Vue.component('component-object2',{
+    props: {
+        name: String,
+        age: Number,
+        hasChildren: Boolean,
+        schools: Object,
+        readBooks: Array
+    },
+    template: '<div>\
+    <h1>Specify types of Props</h1>\
+    <div>name: {{name}}</div>\
+    <div>age: {{age}}</div>\
+    <div>hasChildren: {{hasChildren}}</div>\
+    <div>school name: {{schools.name}}</div>\
+    <div>scholl location: {{schools.location}}</div>\
+    <ul>\
+        <li v-for="item in schools.books">\
+        {{item.title}}\
+        </li>\
+    </ul>\
+    </div>\
+    '
+})
+
+var object2 = new Vue({
+    el: '#app'
+});
+
+exports.object2 = object2;
+
 
 exports.moreData = moreData;
 })(window);
