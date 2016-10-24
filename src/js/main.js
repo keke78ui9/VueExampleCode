@@ -181,6 +181,71 @@ Vue.component('component-object2',{
     '
 })
 
+Vue.component('c-pokemons',{
+    template: '\
+    <div>\
+    <h1>Pokemon List</h1>\
+    <div>click pokemon to get detail pokemon</div>\
+    <ul>\
+        <li v-for="item in pokemons"><a href="javascript:void(0)" v-on:click="selectPokemon(item)">{{item.name}}</a></li>\
+    </ul>\
+    <div v-if="pokemon.name">name:  {{pokemon.name}}</div>\
+<div v-if="pokemon.species" >species:  {{pokemon.species}}</div>\
+    <div v-if="pokemon.weight > 0" >weight:  {{pokemon.weight}}</div>\
+    <div v-if="pokemon.height > 0">height:  {{pokemon.height}}</div>\
+    <div v-if="pokemon.id > 0">id:  {{pokemon.id}}</div>\
+    <div v-if="pokemon.ability">ability:  {{pokemon.ability}}</div>\
+    <div v-if="pokemon.types">types:  {{pokemon.types}}</div>\
+    </div>\
+    ',
+    data: function(){
+        return {
+            pokemons: [],
+            pokemon: {
+                weight: 0,
+                height: 0,
+                name: "",
+                id :  0,
+                ability: "",
+                types: "",
+                species: ""
+            }
+        }
+    },
+    created: function () {
+        var self = this;
+        $.ajax("http://pokeapi.co/api/v2/pokemon/").done(function (data) {
+            console.info(data);
+            self.pokemons = data.results;
+        });
+    },
+    methods: {
+        selectPokemon: function(item){
+                var self = this;
+                var me = item;
+              $.ajax(item.url).done(function (data) {
+                  console.info(data);
+                self.pokemon.weight = data.weight;
+                self.pokemon.height = data.height;
+                self.pokemon.name = item.name;
+                self.pokemon.species = data.species.name;
+                  self.pokemon.id = data.id;
+                var ability = [];
+                for (i = 0, len = data.abilities.length; i < len; i++){
+                    ability.push(data.abilities[i].ability.name);
+                }
+                self.pokemon.ability = ability.join(',');
+                var types = [];
+                for (i = 0, len = data.types.length; i < len; i++){
+                    types.push(data.types[i].type.name);
+                }
+                self.pokemon.types = types.join(',');
+
+        });
+        }
+    }
+})
+
 var object2 = new Vue({
     el: '#app'
 });
