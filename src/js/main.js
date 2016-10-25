@@ -1,6 +1,17 @@
 (function(exports){
 console.log(exports);
 
+
+// vue global error handler
+Vue.config.errorHandler = function(err, vm) {
+    console.info("error" + err);
+    console.info(vm);
+}
+
+Vue.nextTick(function(){
+    console.info("next tick");
+})
+
 var test = new Vue({
 		el: '.test',
         template: '<h1>Vue Template</h1>'
@@ -246,12 +257,29 @@ Vue.component('c-pokemons',{
     }
 })
 
+var button = Vue.extend({
+    template: '<a href="button">My button {{name}}</a>',
+    data: function(){
+        return {
+            name: 'first'
+        }
+    }
+});
+exports.button = button;
+
+new button().$mount('#button_controls');
+
+
+
+
 var object2 = new Vue({
     el: '#app'
 });
+
 
 exports.object2 = object2;
 
 
 exports.moreData = moreData;
 })(window);
+
